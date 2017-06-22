@@ -1,0 +1,74 @@
+﻿@model HeedeMoestrup.Models.NewsArticle
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Slet Nyhed</h2>
+
+<h3>Er du sikker på at du vil slette denne?</h3>
+<div>
+    <h4>Nyhed</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.FilePaths.Any(f => f.FileType == HeedeMoestrup.Models.FileType.NewsPhoto))
+            {
+            <dt>
+                Photo
+            </dt>
+            <dd>
+                <img src="~/images/@ViewBag.imgSrc" alt="" />
+            </dd>
+        }
+        <dt>
+            Titel
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Under titel
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTitle)
+        </dd>
+
+        <dt>
+            Dato
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            Forfatter
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+
+        <dt>
+Artikel        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BodyText)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

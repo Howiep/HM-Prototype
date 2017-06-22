@@ -1,0 +1,25 @@
+﻿body {
+}
+
+#landingPage {
+    height: 100vh;
+}
+
+.CTA {
+    font-size: 3em;
+    Padding-top: 150px;
+}
+
+.bg {
+    height: 100%;
+    background: no-repeat center center;
+    background-size: cover;
+}
+
+.landingLogo {
+    padding: 20px;
+}
+
+    .landingLogo img {
+        max-width: 30%;
+    }

@@ -1,0 +1,212 @@
+﻿
+
+nav.sidebar, .main {
+    -webkit-transition: margin 200ms ease-out;
+    -moz-transition: margin 200ms ease-out;
+    -o-transition: margin 200ms ease-out;
+    transition: margin 200ms ease-out;
+}
+
+.main {
+    padding: 10px 10px 0 10px;
+    margin-top: 50px;
+}
+
+.nav a {
+    font-family: 'Lora', serif;
+}
+
+.nav img {
+    max-width: 100%;
+}
+
+.socials {
+    margin-top: 100px;
+}
+
+    .socials a:first-of-type {
+        padding-top: 50px;
+    }
+
+    .socials a {
+        display: block;
+        padding: 10px;
+        color: #222222;
+    }
+
+        .socials a:hover {
+            color: #777;
+            text-decoration: none;
+        }
+
+.aboutUs {
+    width: 100%;
+    margin-top: 170px;
+}
+
+.navLogo {
+    text-align: center;
+    margin-top: -100px;
+    position: absolute;
+}
+
+    .navLogo img {
+        max-width: 30%;
+    }
+
+.navbar-toggle {
+    border-radius: 0;
+}
+
+.breadcrumb {
+    border-radius: 0;
+    margin-top: 20px;
+    background: linear-gradient(to right, #303368, #f9cddb);
+}
+
+    .breadcrumb a {
+        color: #FEFEFE;
+    }
+
+        .breadcrumb a:hover {
+            color: #d5d2d2;
+        }
+
+.navArrow {
+    color: transparent;
+}
+
+@media (min-width: 765px) {
+
+    .main {
+        margin-top: 250px;
+        top: 15px;
+        position: absolute;
+        width: calc(100% - 40px);
+        margin-left: 40px;
+        float: right;
+    }
+
+    nav.sidebar:hover + .main {
+        margin-left: 200px;
+    }
+
+    nav.sidebar.navbar.sidebar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        margin-left: 0px;
+    }
+
+    nav.sidebar .navbar-brand, nav.sidebar .navbar-header {
+        text-align: center;
+        width: 100%;
+        margin-left: 0px;
+    }
+
+    nav.sidebar a {
+        padding-right: 13px;
+    }
+
+    .navLogo {
+        text-align: center;
+        margin-top: -100px;
+        position: absolute;
+    }
+
+        .navLogo img {
+            max-width: 30%;
+        }
+
+    .navArrow {
+        color: #222222;
+    }
+
+    nav.sidebar .navbar-nav > li:first-child {
+    }
+
+    nav.sidebar .navbar-nav > li {
+    }
+
+    nav.sidebar .navbar-nav .open .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid {
+        padding: 0 0px 0 0px;
+    }
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #222222;
+    }
+
+    nav.sidebar {
+        width: 200px;
+        margin-left: -160px;
+        float: left;
+        margin-bottom: 0px;
+        background-color: transparent;
+        border: none;
+    }
+
+        nav.sidebar li {
+            width: 100%;
+        }
+
+        nav.sidebar:hover {
+            margin-left: 0px;
+        }
+
+    .forAnimate {
+        opacity: 0;
+    }
+}
+
+@media (min-width: 1330px) {
+    .navArrow {
+        color: transparent;
+    }
+
+    .main {
+        width: calc(100% - 200px);
+        margin-left: 200px;
+        margin-top: 250px;
+    }
+
+    nav.sidebar {
+        margin-left: 0px;
+        float: left;
+    }
+
+        nav.sidebar .forAnimate {
+            opacity: 1;
+        }
+
+    .navLogo {
+        text-align: center;
+        padding: 20px;
+        position: absolute;
+        margin-top: 0;
+    }
+
+        .navLogo img {
+            max-width: 100%;
+        }
+}
+
+nav.sidebar .navbar-nav .open .dropdown-menu > li > a:hover, nav.sidebar .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #CCC;
+    background-color: transparent;
+}
+
+nav:hover .forAnimate {
+    opacity: 1;
+}
+
+section {
+    padding-left: 15px;
+}

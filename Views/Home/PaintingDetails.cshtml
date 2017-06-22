@@ -1,0 +1,76 @@
+﻿@model HeedeMoestrup.Models.Painting
+@using System.Globalization;
+
+@{
+    ViewBag.Title = Model.Title + " af " + Model.Artist.Name;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<p class="text-center">
+    <button class="btn btn-default" type="button" onclick="window.print();"><i class="fa fa-2x fa-print" aria-hidden="true"></i> </button>
+</p>
+<div class="row" id="section-to-print">
+    <div class="customParagraph printPage">
+        <br />
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <img src="../../images/logo.png" alt="Logo" />
+            </div>
+            <div class="col-md-6 text-center">
+                <h4>Kontakt</h4>
+                <p>Galleri Heede & Moestrup</p>
+                <p>Edition Heede & Moestrup</p>
+                <p>Borgergade 17D</p>
+                <p>DK - 1300 København K.</p>
+                <p>TEL.: +45 3314 6474</p>
+            </div>
+
+        </div>
+        <hr />
+        <div class="row">
+            <div class="article col-md-6 text-center">
+                @if (Model.FilePaths.Any(f => f.FileType == HeedeMoestrup.Models.FileType.ItemPhoto))
+                {
+                    <img src="../../images/@ViewBag.imgSrc" alt="@Model.Title af @Model.Artist.Name" />
+                }
+            </div>
+            <div class="article col-md-6">
+                <div>
+                    <h3>@Html.DisplayFor(model => model.Title)</h3>
+                    <p>
+                        @Model.Artist.Name
+                    </p>
+                    @Html.Raw(Model.Desc)
+                </div>
+                <br />
+                <div class="row itemDesc">
+                    <div class="col-md-12">
+                        <p class="text-center">
+                            <img class="pull-left" src="../../images/icons/units.png" alt="Units" />   @Html.DisplayFor(modelItem => Model.Height)cm x @Html.DisplayFor(modelItem => Model.Width)cm
+                        </p>
+                        <br />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-center">
+                            <img class="pull-left" src="../../images/icons/coins.png" alt="Coins" />  @String.Format(new CultureInfo("da-DK"), "{0:C}", @Model.Price)
+                        </p>
+                        <br />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-center">
+                            <img class="pull-left" src="../../images/icons/docs.png" alt="Materials" />  @Html.DisplayFor(modelItem => Model.Materials)
+                        </p>
+                        <br />
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-center">
+                            <img class="pull-left" src="../../images/icons/calender.png" alt="Calender" />@Model.Age.ToString("yyyy")
+                        </p>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

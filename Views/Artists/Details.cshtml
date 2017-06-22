@@ -1,0 +1,58 @@
+﻿@model HeedeMoestrup.Models.Artist
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Detaljer</h2>
+
+<div>
+    <h4>Kunstner</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Navn
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Beskrivelse
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.Desc)
+        </dd>
+
+        <dt>
+            Fremtrædende
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Featured)
+        </dd>
+        <dt>
+            Udgivelser af H&M
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HMPublication)
+        </dd>
+        @if (Model.FilePaths.Any(f => f.FileType == HeedeMoestrup.Models.FileType.ArtistAvatar))
+            {
+            <dt>
+                Photo
+            </dt>
+                <dd>
+                    <img src="~/images/@ViewBag.imgSrc" alt="" />
+                </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

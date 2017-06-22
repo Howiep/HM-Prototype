@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2> Hello @User.Identity.Name </h2>
+<p>
+    <a href="@Url.Action("logout", "admin")">Log Out</a>
+</p>
+<p>
+    Velkommen til Admin siderne. På undersiderne her er der lavet en kort beskrivelse af hvordan admin panelet hænger sammen og hvordan det bruges.
+</p>

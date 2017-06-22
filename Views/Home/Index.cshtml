@@ -1,0 +1,90 @@
+﻿@model IEnumerable<HeedeMoestrup.Models.Painting>
+@using System.Globalization;
+
+@{
+    ViewBag.Title = "Forside";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<a id="home"></a>
+
+
+<div class="row">
+    <div class="customParagraph customJumbotron">
+        <div class="col-md-12">
+            <h1>@ViewBag.Header</h1>
+
+            @Html.Raw(ViewBag.Body)
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+
+    <section id="pinBoot">
+        @foreach (var item in Model.OrderBy(x => Guid.NewGuid()).Where(f => f.Artist.Featured).Take(8))
+            {
+            <article class="white-panel">
+
+                <img data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Id)" src="~/images/@Url.Content(item.FilePaths.First().FileName)" alt="@item.Title af @item.Artist.Name">
+
+                <h5><a data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Id)" href="#">@Html.DisplayFor(modelItem => item.Title)</a></h5>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Artist.Name)
+                </p>
+                <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Id)" tabindex="1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body text-center modalImg">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                <img style="max-height: 50vh;" src="../../images/@Url.Content(item.FilePaths.First().FileName)" alt="@item.Artist.Name @item.Title" />
+                            </div>
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="myModalLabel">@Html.DisplayFor(modelItem => item.Title)</h3>
+                                <h4>
+                                    @Html.DisplayFor(modelItem => item.Artist.Name)
+                                </h4>
+                            </div>
+
+                            <div class="modal-header">
+                                <h5>
+                                    @Html.Raw(item.Desc)
+                                </h5>
+                            </div>
+
+                            <div class="modal-header itemDesc">
+
+                                <div class="col-md-12 modal-body">
+                                    <i class="fa fa-2x fa-print" aria-hidden="true"></i>  @Html.ActionLink("  Kilk her for at se en printervenlig side af  " + item.Title, "PaintingDetails", new { id = item.Id })
+                                </div>
+                                <div class="col-md-6 modal-body">
+                                    <h5 class="text-center">
+                                        <img style="max-height: 30px;" class="pull-left" src="../../images/icons/units.png" alt="Units" />   @Html.DisplayFor(modelItem => item.Height)cm x @Html.DisplayFor(modelItem => item.Width)cm
+                                    </h5>
+                                </div>
+                                <div class="col-md-6 modal-body">
+                                    <h5 class="text-center">
+                                        <img style="max-height: 30px;" class="pull-left" src="../../images/icons/coins.png" alt="Coins" />  @String.Format(new CultureInfo("da-DK"), "{0:C}", @item.Price)
+                                    </h5>
+                                </div>
+                                <div class="col-md-6 modal-body">
+                                    <h5 class="text-center">
+                                        <img style="max-height: 30px;" class="pull-left" src="../../images/icons/docs.png" alt="Materials" />  @Html.DisplayFor(modelItem => item.Materials)
+                                    </h5>
+                                </div>
+                                <div class="col-md-6 modal-body">
+                                    <h5 class="text-center">
+                                        <img style="max-height: 30px;" class="pull-left" src="../../images/icons/calender.png" alt="Calender" />@item.Age.ToString("yyyy")
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+</div>

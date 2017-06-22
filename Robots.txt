@@ -1,0 +1,11 @@
+﻿User-Agent: *
+Disallow: 
+Allow: /home/Index
+Allow: /home/
+Allow: /
+Allow: /home/Artists
+Allow: /home/News
+Allow: /home/Paintings
+Allow: /home/Publications
+Allow: /home/Organizations
+Disallow: /Admin

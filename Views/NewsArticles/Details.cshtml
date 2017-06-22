@@ -1,0 +1,63 @@
+﻿@model HeedeMoestrup.Models.NewsArticle
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Detajler</h2>
+
+<div>
+    <h4>Nyhed</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @if (Model.FilePaths.Any(f => f.FileType == HeedeMoestrup.Models.FileType.NewsPhoto))
+            {
+            <dt>
+                Photo
+            </dt>
+            <dd>
+                <img src="~/images/@ViewBag.imgSrc" alt="" />
+            </dd>
+        }
+        <dt>
+Titel        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+Under titel        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubTitle)
+        </dd>
+
+        <dt>
+Dato        </dt>
+
+        <dd>
+            @Model.Date.ToString("D")
+        </dd>
+
+        <dt>
+Forfatter        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+
+        <dt>
+Artikel        </dt>
+
+        <dd>
+            @Html.Raw(Model.BodyText)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,129 @@
+﻿@model PagedList.IPagedList<HeedeMoestrup.Models.Painting>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Admin index";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Kunstværker</h2>
+<p>
+    Værker og også relativt nemt at navigere sig rundt i. Det er dog vigtig at man oprette en kunstner og en kunst kategori først, så man kan vælge dem under oprettelsen af nyt kunstværk.
+</p>
+<p>
+    Højde og bredde enheder er i centimeter og pris er i kroner. Ved alder anbefales det at man vælger d.1 januar i det år kunstnen er fra ellers vil den melde fejl. 
+</p>
+<p>
+    Hvis H&M forlaget udgiver et stykke kunst, så kan <b>Udgivet af H&M</b> feltet checkes for at vise værkerne på udgivelser siden.
+</p>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Index", "Paintings", FormMethod.Get))
+        {
+            <div>
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "searchBox" })
+                <button type="submit" value="Search" class="btn btn-default sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+
+        }
+    </div>
+
+    <ul class="col-md-4 nav nav-pills">
+        <li><a>Sorter efter:  </a></li>
+        <li>
+            @Html.ActionLink("Titel", "Index", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+        </li>
+        <li>
+            @Html.ActionLink("Kunstner", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </li>
+    </ul>
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Kunstner
+        </th>
+        <th>
+            Kategori
+        </th>
+        <th>
+            Titel
+        </th>
+        <th>
+            Beskrivelse
+        </th>
+        <th>
+            Højde
+        </th>
+        <th>
+            Bredde
+        </th>
+        <th>
+            Pris
+        </th>
+        <th>
+            Materiales
+        </th>
+        <th>
+            Årgang
+        </th>
+        <th>
+            Udgivet af HM?
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaintingCat.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.Raw(item.Desc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materials)
+            </td>
+            <td>
+                @item.Age.ToString("yyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HMPublication)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+
+    Side @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) af @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

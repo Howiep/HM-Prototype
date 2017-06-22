@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<HeedeMoestrup.Models.NewsArticle>
+@using PagedList.Mvc;
+@using HtmlAgilityPack;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Nyheder";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@if (ViewBag.page == 1)
+{
+    <div class="row">
+        <div class="customParagraph customJumbotron">
+            <div class="col-md-12">
+                <h2>@ViewBag.Header</h2>
+
+                @Html.Raw(ViewBag.Body)
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("news", "Home", FormMethod.Get))
+        {  <div>
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "searchBox" })
+            <button type="submit" value="Search" class="btn btn-default sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+
+        }
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    <div class="row news mediaList">
+        <div class="col-md-3">
+            <img class="img-responsive" src="../../images/@Url.Content(item.FilePaths.First().FileName)" alt="@Html.DisplayFor(modelItem => item.Title) af @item.Author" />
+        </div>
+        <div class="col-md-9">
+            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+            <h5>@Html.DisplayFor(modelItem => item.SubTitle)</h5>
+            <p>
+                @{
+
+                    var document = new HtmlDocument();
+                    document.LoadHtml(item.BodyText);
+                    item.BodyText = document.DocumentNode.InnerText;
+
+                }
+                @Html.Raw(item.BodyText.Substring(0, 100))
+            </p>
+            @Html.ActionLink("Læs mere", "NewsDetails", new { id = item.Id })
+        </div>
+    </div>
+}
+
+<br />
+Side @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) af @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("News",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+
+
+
+

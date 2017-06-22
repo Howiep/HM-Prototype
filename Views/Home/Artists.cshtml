@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<HeedeMoestrup.Models.Artist>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Kunstnere";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@if (ViewBag.page == 1)
+{
+    <div class="row">
+        <div class="customParagraph customJumbotron">
+            <div class="col-md-12">
+                <h2>@ViewBag.Header</h2>
+
+                @Html.Raw(ViewBag.Body)
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("artists", "Home", FormMethod.Get))
+        {  <div>
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "searchBox" })
+            <button type="submit" value="Search" class="btn btn-default sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+
+        }
+    </div>
+</div>
+<div class="row">
+    <section id="pinBoot">
+        @foreach (var item in Model)
+        {
+            <article class="white-panel">
+                <img src="~/images/@Url.Content(item.FilePaths.First().FileName)" alt="@Html.DisplayFor(modelItem => item.Name)">
+                <h4>@Html.ActionLink(item.Name, "ArtistsDetails", new { id = item.Id })</h4>
+                <p>
+                    @Html.Raw(item.Desc.Substring(0, Math.Min(item.Desc.Length, 100)))@Html.ActionLink("...", "ArtistsDetails", new { id = item.Id })
+                </p>
+
+            </article>
+        }
+    </section>
+</div>
+<br />
+Side @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) af @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Artists",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

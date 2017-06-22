@@ -1,0 +1,90 @@
+﻿@*@model IEnumerable<HeedeMoestrup.Models.NewsArticle>*@
+@model PagedList.IPagedList<HeedeMoestrup.Models.NewsArticle>
+@using HtmlAgilityPack;
+
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Nyheder</h2>
+<p>
+    Her kan man administrere de nyheder der er på siden.
+</p>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Index", "NewsArticles", FormMethod.Get))
+        {
+            <div>
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "searchBox" })
+                <button type="submit" value="Search" class="btn btn-default sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Titel
+        </th>
+        <th>
+            Under Titel
+        </th>
+        <th>
+            Dato
+        </th>
+        <th>
+            Forfatter
+        </th>
+        <th>
+            Artikel
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @item.SubTitle
+            </td>
+            <td>
+                @item.Date.ToString("D")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @{
+
+                    var document = new HtmlDocument();
+                    document.LoadHtml(item.BodyText);
+                    item.BodyText = document.DocumentNode.InnerText;
+
+                }
+                @Html.Raw(item.BodyText.Substring(0, 75))
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+                    }
+
+</table>
+<br />
+
+    Side @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) af @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -1,0 +1,221 @@
+﻿@*@model IEnumerable<HeedeMoestrup.Models.Painting>*@
+@model PagedList.IPagedList<HeedeMoestrup.Models.Painting>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@using System.Globalization;
+
+@{
+    ViewBag.Title = "Kunstværker";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@if (ViewBag.page == 1)
+{
+    <div class="row">
+        <div class="customParagraph customJumbotron">
+            <div class="col-md-12">
+                <h2>@ViewBag.Header</h2>
+
+                @Html.Raw(ViewBag.Body)
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Paintings", "Home", FormMethod.Get))
+        {
+            <div>
+                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, htmlAttributes: new { @class = "searchBox" })
+                <button type="submit" value="Search" class="btn btn-default sbtn"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        }
+    </div>
+
+    <ul class="col-md-4 nav nav-pills">
+        <li><a>Sorter efter:  </a></li>
+        <li>
+            @Html.ActionLink("Titel", "Paintings", new { sortOrder = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+        </li>
+        <li>
+            @Html.ActionLink("Kunstner", "Paintings", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </li>
+    </ul>
+
+    <div class="col-md-4">
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills navbar-right" role="tablist">
+            <li role="presentation" class="active"><a href="#panelView" aria-controls="panelView" role="tab" data-toggle="tab"><i class="fa fa-th-large" aria-hidden="true"></i></a></li>
+            <li role="presentation"><a href="#listView" aria-controls="listView" role="tab" data-toggle="tab"><i class="fa fa-th-list" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+
+</div>
+
+
+
+
+<div class="">
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="panelView">
+            <div class="row">
+                <section id="pinBoot">
+                    @foreach (var item in Model)
+                    {
+                        <article class="white-panel">
+                            <img data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Id)" src="~/images/@Url.Content(item.FilePaths.First().FileName)" alt="">
+                            <h5><a data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Id)" href="#">@Html.DisplayFor(modelItem => item.Title)</a></h5>
+                            <p>
+                                @Html.DisplayFor(modelItem => item.Artist.Name)
+                            </p>
+                        </article>
+                    }
+                </section>
+            </div>
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="listView">
+            <table class="table">
+                <tr>
+                    <th>
+                        Kunstner
+                    </th>
+                    <th>
+                        Kategori
+                    </th>
+                    <th>
+                        Titel
+                    </th>
+                    <th>
+                        Beskrivelse
+                    </th>
+                    <th>
+                        Højde
+                    </th>
+                    <th>
+                        Bredde
+                    </th>
+                    <th>
+                        Pris
+                    </th>
+                    <th>
+                        Materiale
+                    </th>
+                    <th>
+                        Årstal
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Artist.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaintingCat.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.Raw(item.Desc)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Height)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Width)
+                        </td>
+                        <td>
+                            @String.Format(new CultureInfo("da-DK"), "{0:C}", @item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Materials)
+                        </td>
+                        <td>
+                            @item.Age.ToString("yyyy")
+                        </td>
+                        <td>
+                            <a data-toggle="modal" data-target="#@Html.DisplayFor(modelItem => item.Id)" href="#">
+                                Se mere
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <br />
+
+    Side @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) af @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Paintings",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="@Html.DisplayFor(modelItem => item.Id)" tabindex="1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-body text-center modalImg">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <img class="img-responsive" src="../../images/@Url.Content(item.FilePaths.First().FileName)" alt="@item.Artist.Name @item.Title" />
+                </div>
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">@Html.DisplayFor(modelItem => item.Title)</h3>
+                    <h4>
+                        @Html.DisplayFor(modelItem => item.Artist.Name)
+                    </h4>
+                </div>
+
+                <div class="modal-header">
+                    <h5>
+                        @Html.Raw(item.Desc)
+                    </h5>
+                </div>
+
+                <div class="modal-header itemDesc">
+
+                    <div class="col-md-12 modal-body">
+                        <i class="fa fa-2x fa-print" aria-hidden="true"></i>  @Html.ActionLink("  Kilk her for at se en printervenlig side af  " + item.Title, "PaintingDetails", new { id = item.Id })
+                    </div>
+                    <div class="col-md-6 modal-body">
+                        <h5 class="text-center">
+                            <img class="pull-left" src="../../images/icons/units.png" alt="Units" />   @Html.DisplayFor(modelItem => item.Height)cm x @Html.DisplayFor(modelItem => item.Width)cm
+                        </h5>
+                    </div>
+                    <div class="col-md-6 modal-body">
+                        <h5 class="text-center">
+                            <img class="pull-left" src="../../images/icons/coins.png" alt="Coins" />  @String.Format(new CultureInfo("da-DK"), "{0:C}", @item.Price)
+                        </h5>
+                    </div>
+                    <div class="col-md-6 modal-body">
+                        <h5 class="text-center">
+                            <img class="pull-left" src="../../images/icons/docs.png" alt="Materials" />  @Html.DisplayFor(modelItem => item.Materials)
+                        </h5>
+                    </div>
+                    <div class="col-md-6 modal-body">
+                        <h5 class="text-center">
+                            <img class="pull-left" src="../../images/icons/calender.png" alt="Calender" />@item.Age.ToString("yyyy")
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>

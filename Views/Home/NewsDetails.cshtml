@@ -1,0 +1,36 @@
+﻿@model HeedeMoestrup.Models.NewsArticle
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<div class="row">
+    <div class="customParagraph">
+        <div class="article">
+            <div class="col-md-12">
+                @if (Model.FilePaths.Any(f => f.FileType == HeedeMoestrup.Models.FileType.NewsPhoto))
+                {
+                    <img src="../../images/@ViewBag.imgSrc" alt="@Html.DisplayFor(model => model.Title)" />
+                }
+            </div>
+            <div class="col-md-12">
+                <h2>@Html.DisplayFor(model => model.Title)</h2>
+                <h4>
+                    @Html.DisplayFor(model => model.SubTitle)
+                </h4>
+                <p>
+                   Dato:  @Model.Date.ToString("D")
+                </p>
+                <p>
+                   Skrevet af: @Html.DisplayFor(model => model.Author)
+                </p>
+                @Html.Raw(Model.BodyText)
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Tilbage", "News")
+</p>

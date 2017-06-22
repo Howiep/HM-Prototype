@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title - Heede & Moestrup</title>
+    <meta property="og:title" content="Galleri Heede & Moestrup" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Galleri H&M har et af danmarks største lagre af kunst i mange prisklasser. Bla. COBRA kunst af Pierre Alechinsky og Karel Appel" />
+    <meta property="og:url" content="http://test.howie.ovh/" />
+    <meta property="og:image" content="../../images/galleriet.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="HeedeMoestrup" />
+    <meta name="twitter:title" content="Galleri H&M " />
+    <meta name="twitter:description" content="Galleri H&M har et af danmarks største lagre af kunst" />
+    <meta name="twitter:image" content="https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg" />
+    <meta name="Galleri Heede & Moestrup" content="Galleri H&M har et af danmarks største lagre af kunst i mange prisklasser. Bla. COBRA kunst af Pierre Alechinsky og Karel Appel.">
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Lora" rel="stylesheet">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Nav.css" rel="stylesheet" />
+    <link href="~/Content/Landing.css" rel="stylesheet" />
+    <link href="~/Content/Main.css" rel="stylesheet" />
+</head>
+<body>
+    @if (ViewContext.RouteData.Values["action"].ToString() == "Index")
+    {
+        <div id="landingPage" class="container-fluid">
+            @Html.Partial("_LandingPartial")
+        </div>
+    }
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+
+                <div class="navLogo ">
+                    <img src="../../images/logo.png" alt="Logo" />
+                </div>
+
+                <div class="aboutUs text-center">
+                    <h4>Om os</h4>
+                    <p>
+                        Galleri Heede & Moestrup driver forlag
+                        for grafisk kunst og et galleri i en
+                        fredet ejendom i hjertet af København.
+                    </p>
+                </div>
+
+                <nav class="navbar navbar-default sidebar main" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li>
+
+                                </li>
+                                <li class="">
+                                    <i class="navArrow fa fa-bars fa-3x pull-right" aria-hidden="true"></i>
+                                </li>
+                                <li>@Html.ActionLink("Forside", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Kunstnere", "Artists", "Home")</li>
+                                <li>@Html.ActionLink("Nyheder", "news", "Home")</li>
+                                <li>@Html.ActionLink("Udgivelser af H&M", "Publications", "Home")</li>
+                                <li>@Html.ActionLink("Alle kunstværker", "Paintings", "Home")</li>
+                                <li>@Html.ActionLink("Kunstforeninger", "Organizations", "Home")</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="col-md-8">
+                @if (ViewContext.RouteData.Values["action"].ToString() != "Index")
+                {
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">@Html.ActionLink("Forside", "Index", "Home")</li>
+                        <li class="breadcrumb-item"><a href="#">@ViewBag.Title</a></li>
+                    </ol>
+                }
+
+                @RenderBody()
+            </div>
+            <div class="col-md-2 socials ">
+                <div class="text-center">
+                    <h4>Kontakt</h4>
+                    <p>Galleri Heede & Moestrup</p>
+                    <p>Edition Heede & Moestrup</p>
+                    <p>Borgergade 17D</p>
+                    <p>DK - 1300 København K.</p>
+                    <p>TEL.: +45 3314 6474</p>
+                </div>
+                <div class="text-center">
+                    <a href="#">
+
+                        <i class="fa fa-2x fa-facebook-official" aria-hidden="true"></i>
+                    </a>
+                    <a href="#">
+
+                        <i class="fa fa-2x fa-twitter" aria-hidden="true"></i>
+                    </a>
+                    <a href="#">
+
+                        <i class="fa fa-2x fa-instagram" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Grid.js"></script>
+</body>
+</html>

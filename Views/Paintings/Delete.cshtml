@@ -1,0 +1,107 @@
+﻿@model HeedeMoestrup.Models.Painting
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Slet Kuntværk</h2>
+
+<h3>Er du sikker på at du vil slette denne?</h3>
+<div>
+    <h4>Kunstværk</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Kunstner
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Artist.Name)
+        </dd>
+
+        <dt>
+            Kategori
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaintingCat.Name)
+        </dd>
+
+        <dt>
+Titel        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Beskrivelse
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.Desc)
+        </dd>
+
+        <dt>
+Højde        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+
+        <dt>
+Bredde        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+
+        <dt>
+Pris        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+Materialer        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Materials)
+        </dd>
+
+        <dt>
+Årgang        </dt>
+
+        <dd>
+            @Model.Age.ToString("yyyy")
+        <dt>
+            Udgivet af H&M
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HMPublication)
+        </dd>
+        </dd>
+        @if (Model.FilePaths.Any(f => f.FileType == HeedeMoestrup.Models.FileType.ItemPhoto))
+            {
+            <dt>
+                Photo
+            </dt>
+            <dd>
+                <img src="~/images/@ViewBag.imgSrc" alt="" />
+            </dd>
+        }
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

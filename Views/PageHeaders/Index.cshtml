@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HeedeMoestrup.Models.PageHeader>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Side overskrifter</h2>
+<p>Dette er teksten som står øverst på siderne, de kan ændres efter behov, men det er anbefalet at man tager hensyn til hvordan det vil se ud på front end delen af hjemmesiden.</p>
+<p>Alt for mange tegn vil gøre indholdet for stort og bryde designet, udover kunstforeninger siden. Der kan være så meget tekst man har lyst til at smide ind da den kun indeholder denne tekst.</p>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Titel
+        </th>
+        <th>
+            Tekst
+        </th>
+        <th>
+            Side
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @using HtmlAgilityPack;
+                @{
+
+                    var document = new HtmlDocument();
+                    document.LoadHtml(item.PageHeaderText);
+                    item.PageHeaderText = document.DocumentNode.InnerText;
+
+                }
+                @Html.Raw(item.PageHeaderText.Substring(0, 75))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectedView)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+            </td>
+        </tr>
+                    }
+
+</table>
